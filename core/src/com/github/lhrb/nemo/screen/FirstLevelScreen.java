@@ -1,38 +1,55 @@
 package com.github.lhrb.nemo.screen;
 
-import com.github.lhrb.nemo.actors.ActorPrefab;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.github.lhrb.nemo.actors.Player;
+import com.github.lhrb.nemo.util.GuiManager;
 import com.github.lhrb.nemo.actors.Background;
-import com.github.lhrb.nemo.util.AnimationLoader;
+import com.github.lhrb.nemo.actors.CollisionManager;
+import com.github.lhrb.nemo.GameManager;
+import com.github.lhrb.nemo.SpawnFactory.EnemyFactory;
+import com.github.lhrb.nemo.util.SoundManager;
 
-public class FirstLevelScreen extends AbstractScreen{
-    
-    Player player;
-    ActorPrefab explosion;
+
+public class FirstLevelScreen extends AbstractScreen {
+    private EnemyFactory factory = new EnemyFactory(1, gameStage);
+    private float gameTime;
+    private Player player;
+    private Label score;
 
     @Override
     public void init() {
-        Background bg = new Background(0,0,gameStage,1);
-        Background bg2 = new Background(0,1200,gameStage,1);
-
-        player = new Player(20,20, gameStage);
-        player.setShapePolygon(8);
+        gameTime = 0F;
+        Background bg = new Background(0, 0, gameStage, 1);
+        Background bg2 = new Background(0, 1200, gameStage, 1);
         
-        // player.setWorldDimension(1200, 600); // should get reworked
-        explosion = new ActorPrefab(200,200, gameStage);
-        explosion.setAnimation(AnimationLoader.loadAnimation(
-                               "explosion.png", 6, 6, 0.05f, true));
-        explosion.setShapePolygon(8);
-
+        score = new Label(GameManager.getInstance().getScoreAsString(),
+                                 GuiManager.getInstance().getLabelStyle());
+        score.setPosition(700, 550);
+        guiStage.addActor(score);
         
+        player = new Player(20, 20, gameStage);
+
+        SoundManager.getInstance().playTrack("firstlevel");
     }
 
     @Override
     public void update(float delta) {
         // TODO Auto-generated method stub
-        if(player.overlap(explosion)) {
-            System.out.println("Collision " + delta);
-        }
-    }
+        gameTime += delta;
 
+        /* Once we define an abstract class for gameScreens, we can define a variable
+           for how long the level shall take and replace the hardcorded 3*6
+         */
+        CollisionManager.checkCollision(getPhysicalActors());
+
+        if (gameTime < 3 * 60) {
+            factory.continueManufacture(delta);
+        } else {
+            // we have to initialize the bossScreen
+            System.out.println("The Boss level should start here");
+        }
+        
+        //needs rework since String is immutable (memory performance) 
+        score.setText(GameManager.getInstance().getScoreAsString());
+    }
 }

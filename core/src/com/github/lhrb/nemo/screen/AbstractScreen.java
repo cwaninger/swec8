@@ -1,11 +1,15 @@
 package com.github.lhrb.nemo.screen;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.github.lhrb.nemo.actors.PhysicalActor;
 
 /**
  * Abstract class 
@@ -37,6 +41,16 @@ public abstract class AbstractScreen implements Screen, InputProcessor{
      */
     public abstract void update(float delta); 
     
+    
+    protected ArrayList<PhysicalActor> getPhysicalActors(){
+       ArrayList<PhysicalActor> list = new ArrayList<PhysicalActor>();
+       for(Actor e : gameStage.getActors()) {
+           if(e instanceof PhysicalActor) {
+               list.add( (PhysicalActor)e );
+           }
+       }
+       return list;
+    }
     
     /**
      * 
