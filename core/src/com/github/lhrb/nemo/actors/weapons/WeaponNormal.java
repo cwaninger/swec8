@@ -6,7 +6,7 @@ import com.github.lhrb.nemo.util.SoundManager;
 
 public class WeaponNormal extends Weapon {
     public WeaponNormal(Stage stage) {
-        super(stage, 0.6f);
+        super(stage, 0.4f);
     }
 
     public WeaponNormal(Stage stage, float cooldown) {

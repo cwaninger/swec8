@@ -1,7 +1,9 @@
 package com.github.lhrb.nemo.screen;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.github.lhrb.nemo.actors.ActorPrefab;
 import com.github.lhrb.nemo.actors.Player;
+import com.github.lhrb.nemo.util.AnimationLoader;
 import com.github.lhrb.nemo.util.GuiManager;
 import com.github.lhrb.nemo.actors.Background;
 import com.github.lhrb.nemo.actors.CollisionManager;
@@ -14,7 +16,7 @@ public class FirstLevelScreen extends AbstractScreen {
     private EnemyFactory factory = new EnemyFactory(1, gameStage);
     private float gameTime;
     private Player player;
-    private Label score;
+    private Label score, life;
 
     @Override
     public void init() {
@@ -24,12 +26,20 @@ public class FirstLevelScreen extends AbstractScreen {
         
         score = new Label(GameManager.getInstance().getScoreAsString(),
                                  GuiManager.getInstance().getLabelStyle());
-        score.setPosition(700, 550);
+        score.setPosition(740, 550);
         guiStage.addActor(score);
-        
+
         player = new Player(20, 20, gameStage);
 
+        new ActorPrefab(750, 30, guiStage)
+                .setAnimation(AnimationLoader.get().texture("heart.png"));
+        life = new Label(player.getLife(),
+                GuiManager.getInstance().getLabelStyle());
+        life.setPosition(740, 60);
+        guiStage.addActor(life);
+
         SoundManager.getInstance().playTrack("firstlevel");
+
     }
 
     @Override
@@ -51,5 +61,6 @@ public class FirstLevelScreen extends AbstractScreen {
         
         //needs rework since String is immutable (memory performance) 
         score.setText(GameManager.getInstance().getScoreAsString());
+        life.setText(player.getLife());
     }
 }

@@ -27,7 +27,7 @@ public class Background extends ActorPrefab {
                 fileName = "bg1.png";
                 break;
         }
-        setAnimation(AnimationLoader.loadTexture(fileName));
+        setAnimation(AnimationLoader.get().texture(fileName));
         setAcceleration(200);
         setSpeedMax(200);
     }

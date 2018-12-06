@@ -52,6 +52,23 @@ public abstract class AbstractScreen implements Screen, InputProcessor{
        return list;
     }
     
+    
+    public Stage getUiStage() {
+        return guiStage;
+    }
+    
+    public void setUiStage(Stage stage) {
+        guiStage = stage;
+    }
+    
+    public Stage getGameStage() {
+        return gameStage;
+    }
+    
+    public void setGameStage(Stage stage) {
+        gameStage = stage;
+    }
+    
     /**
      * 
      */

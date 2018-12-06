@@ -10,13 +10,13 @@ public class ActiveWeaponIcon extends ActorPrefab {
 
         switch (type) {
             case "normal":
-                setAnimation(AnimationLoader.loadTexture("IconNormal.png"));
+                setAnimation(AnimationLoader.get().texture("IconNormal.png"));
                 break;
             case "spread":
-                setAnimation(AnimationLoader.loadTexture("IconSpread.png"));
+                setAnimation(AnimationLoader.get().texture("IconSpread.png"));
                 break;
             case "laser":
-                setAnimation(AnimationLoader.loadTexture("IconLaser.png"));
+                setAnimation(AnimationLoader.get().texture("IconLaser.png"));
                 break;
             default:
                 // no texture

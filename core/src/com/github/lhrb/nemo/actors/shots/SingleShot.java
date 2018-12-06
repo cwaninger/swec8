@@ -13,7 +13,7 @@ public class SingleShot extends Shots {
     public SingleShot(float x, float y, Stage stage, float angle) {
         super(x, y, stage, angle);
 
-        setAnimation(AnimationLoader.loadTexture("SchussStandart.png"));
+        setAnimation(AnimationLoader.get().texture("SchussStandart.png"));
         setSpeedMax(800);
         setAcceleration(30000);
         setShapePolygon(8);

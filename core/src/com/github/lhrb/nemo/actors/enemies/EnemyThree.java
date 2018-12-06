@@ -18,7 +18,7 @@ public class EnemyThree extends Enemy {
     private Weapon weapon;
 
     public void setCharacteristics(Stage stage) {
-        setAnimation(AnimationLoader.loadTexture("gegner3.png"));
+        setAnimation(AnimationLoader.get().texture("gegner3.png"));
         //setRotation(180);
         setAcceleration(1000);
         setSpeedMax(100);
@@ -28,7 +28,7 @@ public class EnemyThree extends Enemy {
         hp = 3;
         scoreValue = 2;
 
-        weapon = new WeaponNormal(stage, 1.3f);
+        weapon = new WeaponNormal(stage, 2.2f);
     }
 
     /**
@@ -41,6 +41,8 @@ public class EnemyThree extends Enemy {
 
         applyObjectPhysics(delta);
 
-        weapon.fire(getX()+(getWidth()/2),getY()-40, 270);
+        if (getStage() != null && getY()+20 < getStage().getHeight()) {
+            weapon.fire(getX() + (getWidth() / 2), getY() - 40, 270);
+        }
     }
 }

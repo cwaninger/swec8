@@ -19,7 +19,7 @@ public class EnemyOne extends Enemy {
     private Weapon weaponright;
 
     public void setCharacteristics(Stage stage) {
-        setAnimation(AnimationLoader.loadTexture("gegner1.png"));
+        setAnimation(AnimationLoader.get().texture("gegner1.png"));
         setRotation(180);
         setAcceleration(1000);
         setSpeedMax(75);
@@ -29,8 +29,8 @@ public class EnemyOne extends Enemy {
         hp = 2;
         scoreValue = 1;
 
-        weaponleft = new WeaponNormal(stage, 1.2f);
-        weaponright = new WeaponNormal(stage, 1.2f);
+        weaponleft = new WeaponNormal(stage, 2f);
+        weaponright = new WeaponNormal(stage, 2f);
     }
 
         /**
@@ -43,8 +43,10 @@ public class EnemyOne extends Enemy {
 
             applyObjectPhysics(delta);
 
-            weaponleft.fire(getX()+(getWidth()/2)-20,getY()-30, 270);
-            weaponright.fire(getX()+(getWidth()/2)+20,getY()-30, 270);
+            if (getStage() != null && getY()+20 < getStage().getHeight()) {
+                weaponleft.fire(getX() + (getWidth() / 2) - 20, getY() - 30, 270);
+                weaponright.fire(getX() + (getWidth() / 2) + 20, getY() - 30, 270);
+            }
         }
 
 }

@@ -19,7 +19,7 @@ public class EnemyTwo extends Enemy {
 
     public void setCharacteristics(Stage stage) {
         
-        setAnimation(AnimationLoader.loadTexture("gegner2.png"));
+        setAnimation(AnimationLoader.get().texture("gegner2.png"));
         //setRotation(180);
         setAcceleration(30);
         setSpeedMax(30);
@@ -29,7 +29,7 @@ public class EnemyTwo extends Enemy {
         hp = 4;
         scoreValue = 3;
 
-        weapon = new WeaponSpread(stage,1.3f);
+        weapon = new WeaponSpread(stage,2.8f, 32f);
     }
 
     /**
@@ -42,6 +42,8 @@ public class EnemyTwo extends Enemy {
 
         applyObjectPhysics(delta);
 
-        weapon.fire(getX()+(getWidth()/2),getY()-40, 270);
+        if (getStage() != null && getY()+20 < getStage().getHeight()) {
+            weapon.fire(getX() + (getWidth() / 2), getY() - 40, 270);
+        }
     }
 }

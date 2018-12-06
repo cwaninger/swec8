@@ -10,7 +10,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * @author exa
@@ -20,6 +22,76 @@ import java.io.IOException;
  */
 public class AnimationLoader {
     
+    
+    private static AnimationLoader animationLoader;
+    private HashMap<String, Animation<TextureRegion> > animStorage;
+    
+    private AnimationLoader() {
+        animStorage = new HashMap<String, Animation<TextureRegion>>();
+    }
+    
+    public static AnimationLoader get() {
+        if(animationLoader == null) {
+            animationLoader = new AnimationLoader();
+        }
+        return animationLoader;
+    }
+    
+    /**
+     * Method may return null
+     * @param fileName
+     * @return
+     */
+    public Animation<TextureRegion> texture(String fileName) {
+        if(fileName == null) return null;
+        Animation<TextureRegion> ret =  null;
+        
+        if(!animStorage.containsKey(fileName)) {
+            try {
+                ret = AnimationLoader.loadTexture(fileName);
+                animStorage.put(fileName, ret);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            
+        }
+        
+        ret = animStorage.get(fileName);
+        return ret;
+    }
+    
+    
+    /**
+     * Method may return null
+     * @param fileName
+     * @param rows
+     * @param cols
+     * @param frameDuration
+     * @param loop
+     * @return
+     */
+    public Animation<TextureRegion> animation(String fileName,
+                                            int rows, int cols,
+                                            float frameDuration, boolean loop){
+        if(fileName == null) return null;
+        Animation<TextureRegion> ret =  null;
+        
+        if(!animStorage.containsKey(fileName)) {
+            try {
+                ret = AnimationLoader
+                      .loadAnimation(fileName, rows, cols, frameDuration, loop);
+                animStorage.put(fileName, ret);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            
+        }
+        
+        ret = animStorage.get(fileName);
+        return ret;
+    }
     
     /**
      * Returns an animation based on a sequence inside a 
@@ -35,13 +107,18 @@ public class AnimationLoader {
      * @param frameDuration
      * @param loop
      * @return
+     * @throws FileNotFoundException 
      */
     public static Animation<TextureRegion> loadAnimation(String fileName, 
                                                   int rows, int cols, 
-                                                  float frameDuration, boolean loop){
-        if (!Gdx.files.internal(fileName).exists()) {
-            throw new NullPointerException("The file which was tried to load does not exist");
+                                                  float frameDuration, boolean loop) 
+                                                      throws FileNotFoundException{
+        
+        
+        if(!Gdx.files.internal(fileName).exists()) {
+            throw new FileNotFoundException("File does not exist");
         }
+        
         Texture texture = new Texture(Gdx.files.internal(fileName), true);
         texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         int tileWidth = texture.getWidth() / cols;
@@ -74,8 +151,10 @@ public class AnimationLoader {
      * 
      * @param fileName
      * @return
+     * @throws FileNotFoundException 
      */
-    public static Animation<TextureRegion> loadTexture(String fileName){
+    public static Animation<TextureRegion> loadTexture(String fileName) 
+                                          throws FileNotFoundException{
         return loadAnimation(fileName, 1, 1, 1, true);
     }
     
