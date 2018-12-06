@@ -4,6 +4,9 @@
 package com.github.lhrb.nemo;
 
 
+import com.github.lhrb.nemo.util.Serialization;
+import com.github.lhrb.nemo.util.Highscore;
+import java.util.ArrayList;
 
 /**
  * @author exa
@@ -13,7 +16,9 @@ package com.github.lhrb.nemo;
 public class GameManager {
     
     private static GameManager gameMng;
-    
+    private Serialization serialize;
+    private ArrayList<Highscore> highscore=serialize.deserialise();
+    // Sorting highscore.arrayList.sort(Comparator.comparing(Highscore::getStartDate));
     private int score;
     private String scoreTxt;
         

@@ -1,14 +1,12 @@
 package com.github.lhrb.nemo.util;
 
-import com.github.lhrb.nemo.actors.Player;
-import com.github.lhrb.nemo.actors.Stats;
-
 import java.io.*;
+import java.util.ArrayList;
 
 public class Serialization {
-    public void serialise(Stats toSave){
+    public void serialise(ArrayList<Highscore> toSave){
         try {
-            FileOutputStream fs = new FileOutputStream("Stats.s");
+            FileOutputStream fs = new FileOutputStream("Highscore.s");
             ObjectOutputStream os = new ObjectOutputStream(fs);
             os.writeObject(toSave);
             os.close();
@@ -18,19 +16,19 @@ public class Serialization {
         }
     }
 
-    public Stats deserialise(Player player){
-        File test = new File("Stats.s");
+    public ArrayList<Highscore>  deserialise(){
+        File test = new File("Highscore.s");
         try {
             if (test.exists()) {
-                FileInputStream fs = new FileInputStream("Stats.s");
+                FileInputStream fs = new FileInputStream("Highscore.s");
                 try (ObjectInputStream objectInputStream = new ObjectInputStream(fs)) {
-                    return (Stats) objectInputStream.readObject();
+                    return (ArrayList<Highscore> ) objectInputStream.readObject();
                 }
             }
         }catch (IOException|ClassNotFoundException e){
             //TODO optimise exception handling
             e.printStackTrace();
         }
-        return new Stats(player);
+        return new ArrayList<Highscore>();
     }
 }
