@@ -17,6 +17,8 @@ public class SingleShot extends Shots {
         setSpeedMax(800);
         setAcceleration(30000);
         setShapePolygon(8);
+
+        setX(getX()-(getWidth()/2));
     }
 
     @Override

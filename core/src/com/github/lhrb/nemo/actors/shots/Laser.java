@@ -15,6 +15,8 @@ public class Laser extends Shots {
         setSpeedMax(1600);
         setAcceleration(30000);
         setShapePolygon(8);
+
+        setX(getX()-(getWidth()/2)+1);
     }
 
     @Override

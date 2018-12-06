@@ -15,7 +15,6 @@ public abstract class Shots extends PhysicalActor {
         if (angle > 0 && angle < 180) isPlayerShot = true;
         else isPlayerShot = false;
         rotateBy(angle-90);
-        setX(getX()-(getWidth()/2));
     }
 
     @Override
